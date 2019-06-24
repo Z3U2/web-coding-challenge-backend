@@ -1,7 +1,7 @@
 const shopController = require('./controller')
 const express = require('express')
 
-exports = class {
+exports.ShopAPI = class {
     constructor() {
 
     }
