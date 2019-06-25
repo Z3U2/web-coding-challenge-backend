@@ -4,7 +4,7 @@
   "description": "Backend for UR web-coding-challenge",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose --config jest.config.js"
   },
   "repository": {
     "type": "git",
