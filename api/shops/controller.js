@@ -48,16 +48,22 @@ exports.getItemByName = async (req, res, next) => {
 exports.createItem = async(req, res, next) => {
     let item = {
         name : req.body.name,
-        location : req.body.location,
-        picture : req.body.picture
+        location : req.body.location
     }
-    let savedItem = await shopService.createItem(item)
 
-    return res.status(200).json({
-        status: 200,
-        id : savedItem._id,
-        message : `Successfully saved shop`
-    })
+    if (req.body.picture) item.picture = req.body.picture
+
+    try {
+        let savedItem = await shopService.createItem(item)
+
+        return res.status(200).json({
+            status: 200,
+            id: savedItem._id,
+            message: `Successfully saved shop`
+        })
+    } catch (e) {
+        next(e)
+    }
 }
 
 exports.deleteItem = async(req,res,next) => {
