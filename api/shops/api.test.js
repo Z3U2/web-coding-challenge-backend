@@ -343,6 +343,22 @@ describe('PUT tests', () => {
             }
         })
     })
+    test('PUT /inexistentShop', async () => {
+        let res = await request(app)
+            .put(`/${new mongoose.Types.ObjectId}`)
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type : 'Point',
+                    coordinates: [
+                        -6.866521,
+                        33.955940
+                    ]
+                }
+            });
+        expect(res.status).toEqual(404);
+    });
     test('PUT /:id Missing location type', async () => {
         let res = await request(app)
             .put('/5d116e5e97114213e069dd27')
