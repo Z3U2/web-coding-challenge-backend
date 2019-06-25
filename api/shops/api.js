@@ -1,5 +1,6 @@
 const shopController = require('./controller')
 const express = require('express')
+const { paramIsId } = require('../utils/checkId')
 
 exports.ShopAPI = class {
     constructor() {
@@ -12,14 +13,17 @@ exports.ShopAPI = class {
         
         // GET /
         router.get('/', shopController.getAll)
-        // GET /:shopid
-        router.get('/:shopid', shopController.getItem)
+        // GET /:id
+        router.get('/:id',paramIsId)
+        router.get('/:id', shopController.getItem)
         // POST /
         router.post('/', shopController.createItem)
-        // PUT /:shopid
-        router.put('/:shopid', shopController.updateItem)
-        // DELETE /:shopid
-        router.delete('/:shopid', shopController.deleteItem)
+        // PUT /:id
+        router.put('/:id', paramIsId)
+        router.put('/:id', shopController.updateItem)
+        // DELETE /:id
+        router.delete('/:id', paramIsId)
+        router.delete('/:id', shopController.deleteItem)
         
         return router
     }

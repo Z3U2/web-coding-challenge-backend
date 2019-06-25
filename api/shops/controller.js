@@ -11,7 +11,7 @@ exports.getAll = async (req, res, next) => {
 }
 
 exports.getItem = async (req, res, next) => {
-    let id = req.params.shopid
+    let id = req.params.id
     let item = await shopService.getItem({ _id: id })
 
     return res.status(200).json({
@@ -48,7 +48,7 @@ exports.createItem = async(req, res, next) => {
 }
 
 exports.deleteItem = async(req,res,next) => {
-    let id = req.params.shopid
+    let id = req.params.id
     await shopService.deleteItem({ _id : id })
 
     return res.status(200).json({
@@ -59,7 +59,7 @@ exports.deleteItem = async(req,res,next) => {
 }
 
 exports.updateItem = async (req, res, next) => {
-    let id = req.params.shopid
+    let id = req.params.id
     let shop = req.body
     await shopService.updateItem({ _id: id },{shop})
 
