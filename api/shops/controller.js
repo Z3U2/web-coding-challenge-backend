@@ -95,7 +95,7 @@ exports.validate = async (req, res, next) => {
         // Location type validation
         if(req.body.location.type) {
             let type = req.body.location.type
-            if (typeof type !== String) return res.status(400).json({
+            if (typeof type !== "string") return res.status(400).json({
                 status: 400,
                 message: 'Location type should be of type String'
             })
@@ -121,7 +121,7 @@ exports.validate = async (req, res, next) => {
             })
             let lng = coordinates[0]
             let lat = coordinates[1]
-            if (typeof lng !== Number || typeof lat !== Number) return res
+            if (typeof lng !== "number" || typeof lat !== "number") return res
                 .status(400).json({
                     status: 400,
                     message: 'location.coordinates should be an array of numbers'
@@ -146,7 +146,7 @@ exports.validate = async (req, res, next) => {
 
     if (req.body.name) {
         let name = req.body.name
-        if (typeof name !== String) return res.status(400).json({
+        if (typeof name !== "string") return res.status(400).json({
             status: 400,
             message: 'name should be of type "String"'
         })
