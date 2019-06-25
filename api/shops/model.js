@@ -2,8 +2,14 @@ const mongoose = require('mongoose')
 const { pointSchema } = require('../utils/point')
 
 const shopSchema = new mongoose.Schema({
-    name: String,
-    location: pointSchema,
+    name: {
+        type : String,
+        required : true
+    },
+    location: {
+        type : pointSchema,
+        required :true
+    },
     picture: String
 })
 
