@@ -91,7 +91,7 @@ exports.updateItem = async (req, res, next) => {
 
 exports.validate = async (req, res, next) => {
     if (req.body.location) {
-        let location
+        let location = {}
         // Location type validation
         if(req.body.location.type) {
             let type = req.body.location.type
