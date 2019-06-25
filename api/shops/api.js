@@ -29,6 +29,9 @@ exports.ShopAPI = class {
         router.post('/', shopController.createItem)
         // PUT /:id
         router.put('/:id', paramIsId)
+        router.put('/:id', this.checkBody)
+        router.put('/:id', this.cleanBody)
+        router.put('/:id', shopController.validate)
         router.put('/:id', shopController.updateItem)
         // DELETE /:id
         router.delete('/:id', paramIsId)
