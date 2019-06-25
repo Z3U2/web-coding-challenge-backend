@@ -1,0 +1,242 @@
+[
+    {
+        "_id": "5d116e5e97114213e069dd27",
+        "name": "Parfumerie Zahrat Arriad",
+        "location": {
+            "_id": "5d116e5e97114213e069dd28",
+            "type": "Point",
+            "coordinates": [
+                -6.868422599999999,
+                33.9576474
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd29",
+        "name": "TIMESQUARE",
+        "location": {
+            "_id": "5d116e5e97114213e069dd2a",
+            "type": "Point",
+            "coordinates": [
+                -6.867009599999999,
+                33.9606994
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd2b",
+        "name": "Miss Air",
+        "location": {
+            "_id": "5d116e5e97114213e069dd2c",
+            "type": "Point",
+            "coordinates": [
+                -6.8667341,
+                33.9607623
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd2d",
+        "name": "Baby Glam'",
+        "location": {
+            "_id": "5d116e5e97114213e069dd2e",
+            "type": "Point",
+            "coordinates": [
+                -6.8661198,
+                33.9610468
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd2f",
+        "name": "VOGA",
+        "location": {
+            "_id": "5d116e5e97114213e069dd30",
+            "type": "Point",
+            "coordinates": [
+                -6.8654576,
+                33.9548556
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd31",
+        "name": "Cent Dix Sept",
+        "location": {
+            "_id": "5d116e5e97114213e069dd32",
+            "type": "Point",
+            "coordinates": [
+                -6.865250000000001,
+                33.9609566
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd33",
+        "name": "LE CORNER CONCEPT STORE",
+        "location": {
+            "_id": "5d116e5e97114213e069dd34",
+            "type": "Point",
+            "coordinates": [
+                -6.866699999999999,
+                33.96181099999999
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd35",
+        "name": "PIMKIE",
+        "location": {
+            "_id": "5d116e5e97114213e069dd36",
+            "type": "Point",
+            "coordinates": [
+                -6.872586600000001,
+                33.9559819
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd37",
+        "name": "Yves Rocher",
+        "location": {
+            "_id": "5d116e5e97114213e069dd38",
+            "type": "Point",
+            "coordinates": [
+                -6.872629499999999,
+                33.95594629999999
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd39",
+        "name": "Marwa",
+        "location": {
+            "_id": "5d116e5e97114213e069dd3a",
+            "type": "Point",
+            "coordinates": [
+                -6.865292799999999,
+                33.9540239
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd3b",
+        "name": "B&G Store",
+        "location": {
+            "_id": "5d116e5e97114213e069dd3c",
+            "type": "Point",
+            "coordinates": [
+                -6.8663759,
+                33.9622676
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd3d",
+        "name": "MAGIC JOUET - HAY RIAD",
+        "location": {
+            "_id": "5d116e5e97114213e069dd3e",
+            "type": "Point",
+            "coordinates": [
+                -6.866132700000001,
+                33.9624357
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd3f",
+        "name": "VASCO DE GAMA la mode masculine",
+        "location": {
+            "_id": "5d116e5e97114213e069dd40",
+            "type": "Point",
+            "coordinates": [
+                -6.8649944,
+                33.953735
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd41",
+        "name": "Ryadsquare store",
+        "location": {
+            "_id": "5d116e5e97114213e069dd42",
+            "type": "Point",
+            "coordinates": [
+                -6.872302899999999,
+                33.9615208
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd43",
+        "name": "Lm dressing",
+        "location": {
+            "_id": "5d116e5e97114213e069dd44",
+            "type": "Point",
+            "coordinates": [
+                -6.8644984,
+                33.95118229999999
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd45",
+        "name": "Molato Couture",
+        "location": {
+            "_id": "5d116e5e97114213e069dd46",
+            "type": "Point",
+            "coordinates": [
+                -6.865130400000001,
+                33.9509412
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd47",
+        "name": "Salini Costruttori Spa",
+        "location": {
+            "_id": "5d116e5e97114213e069dd48",
+            "type": "Point",
+            "coordinates": [
+                -6.864715,
+                33.94909000000001
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd49",
+        "name": "Majda Kabbab",
+        "location": {
+            "_id": "5d116e5e97114213e069dd4a",
+            "type": "Point",
+            "coordinates": [
+                -6.8784082,
+                33.9626375
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd4b",
+        "name": "LC Waikiki",
+        "location": {
+            "_id": "5d116e5e97114213e069dd4c",
+            "type": "Point",
+            "coordinates": [
+                -6.854455199999999,
+                33.9534203
+            ]
+        }
+    },
+    {
+        "_id": "5d116e5e97114213e069dd4d",
+        "name": "W.s.k",
+        "location": {
+            "_id": "5d116e5e97114213e069dd4e",
+            "type": "Point",
+            "coordinates": [
+                -6.854215099999998,
+                33.95324389999999
+            ]
+        }
+    }
+]
