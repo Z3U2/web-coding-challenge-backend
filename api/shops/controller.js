@@ -34,17 +34,6 @@ exports.getItem = async (req, res, next) => {
     }
 }
 
-exports.getItemByName = async (req, res, next) => {
-    let name = req.query.name
-    let item = await shopService.getItem({ name: name })
-
-    return res.status(200).json({
-        status: 200,
-        data: item,
-        message: `Successfully received shop`
-    })
-}
-
 exports.createItem = async(req, res, next) => {
     let item = {
         name : req.body.name,
