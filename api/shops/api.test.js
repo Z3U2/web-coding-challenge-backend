@@ -160,7 +160,7 @@ describe('POST tests', () => {
             });
         expect(res.status).toEqual(400);
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toEqual('incorrect location type');
+        expect(res.body.message).toEqual('Shop location type should be "Point"');
     });
     test('POST / incorrect location coordinates', async () => {
         let res = await request(app)
@@ -169,15 +169,16 @@ describe('POST tests', () => {
             .send({
                 name: 'STARCUPS',
                 location: {
-                    type: 'test',
+                    type: 'Point',
                     coordinates: [
                         -6.866521,
-                        33.955940
+                        33.955940,
+                        'hello'
                     ]
                 }
             });
         expect(res.status).toEqual(400);
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toEqual('incorrect location coordinates');
+        expect(res.body.message).toEqual('location.coordinates should be of length 2 : [lng,lat]')
     });
 })
