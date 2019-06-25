@@ -17,6 +17,7 @@ exports.ShopAPI = class {
         router.get('/:id',paramIsId)
         router.get('/:id', shopController.getItem)
         // POST /
+        router.post('/', shopController.validate)
         router.post('/', shopController.createItem)
         // PUT /:id
         router.put('/:id', paramIsId)
