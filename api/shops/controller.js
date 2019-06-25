@@ -68,13 +68,22 @@ exports.createItem = async(req, res, next) => {
 
 exports.deleteItem = async(req,res,next) => {
     let id = req.params.id
-    await shopService.deleteItem({ _id : id })
+    try {
+        let deletedItem = await shopService.deleteItem({ _id: id })
 
-    return res.status(200).json({
-        status: 200,
-        id : id,
-        message : `Successfully deleted shop`
-    })
+        if(!deletedItem) return res.status(404).json({
+            status: 404,
+            message: `Item with id : ${id} not found`
+        })
+
+        return res.status(200).json({
+            status: 200,
+            id: id,
+            message: `Successfully deleted shop`
+        })
+    } catch (e)  {
+        next(e)
+    }
 }
 
 exports.updateItem = async (req, res, next) => {
