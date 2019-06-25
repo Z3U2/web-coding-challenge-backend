@@ -149,6 +149,55 @@ describe('POST tests', () => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toEqual('Missing location');
     });
+    test('POST / Missing location type', async () => {
+        let res = await request(app)
+            .post('/')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    coordinates: [
+                        -6.866521,
+                        33.955940
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('Missing location type');
+    });
+    test('POST / Missing location coordinates', async () => {
+        let res = await request(app)
+            .post('/')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'Point',
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('Missing location coordinates');
+    });
+    test('POST / non string location type', async () => {
+        let res = await request(app)
+            .post('/')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: {},
+                    coordinates: [
+                        -6.866521,
+                        33.955940
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('Location type should be of type String');
+    });
     test('POST / incorrect location type', async () => {
         let res = await request(app)
             .post('/')
@@ -167,7 +216,43 @@ describe('POST tests', () => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toEqual('Shop location type should be "Point"');
     });
-    test('POST / incorrect location coordinates', async () => {
+    test('POST / location.coordinates not an array', async () => {
+        let res = await request(app)
+            .post('/')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'Point',
+                    coordinates: {
+                        lat : 6,
+                        lng : 40
+                    }
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('location.coordinates should be of type "Array"')
+    });
+    test('POST / incorrect location coordinates type', async () => {
+        let res = await request(app)
+            .post('/')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'Point',
+                    coordinates: [
+                        'lng',
+                        'lat',
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('location.coordinates should be an array of numbers')
+    });
+    test('POST / incorrect location coordinates length', async () => {
         let res = await request(app)
             .post('/')
             .set('Content-Type', 'application/json')
@@ -211,4 +296,173 @@ describe('DELETE tests', () => {
             .delete(`/${new mongoose.Types.ObjectId}`)
         expect(res.status).toEqual(404)
     })
+})
+
+describe('PUT tests', () => {
+    beforeEach(async () => {
+        await initDB()
+        return
+    })
+
+    afterEach(async () => {
+        await cleanDB()
+        return
+    })
+    test('PUT /:id with correct input', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'Some place',
+                location: {
+                    type: 'Point',
+                    coordinates: [
+                        -5,
+                        40
+                    ]
+                }
+            })
+        expect(res.status).toEqual(200)
+        expect(res.body).toHaveProperty('id')
+        let id = res.body.id
+        let verification = await request(app)
+            .get(`/${id}`)
+        expect(verification.status).toEqual(200)
+        let obj = verification.body.data
+        delete obj._id
+        delete obj.location._id
+        delete obj.__v
+        expect(obj).toEqual({
+            name: 'Some place',
+            location: {
+                type: 'Point',
+                coordinates: [
+                    -5,
+                    40
+                ]
+            }
+        })
+    })
+    test('PUT /:id Missing location type', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    coordinates: [
+                        -6.866521,
+                        33.955940
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('Missing location type');
+    });
+    test('PUT /:id Missing location coordinates', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'Point',
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('Missing location coordinates');
+    });
+    test('PUT /:id non string location type', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: {},
+                    coordinates: [
+                        -6.866521,
+                        33.955940
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('Location type should be of type String');
+    });
+    test('PUT /:id incorrect location type', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'test',
+                    coordinates: [
+                        -6.866521,
+                        33.955940
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('Shop location type should be "Point"');
+    });
+    test('PUT /:id location.coordinates not an array', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'Point',
+                    coordinates: {
+                        lat: 6,
+                        lng: 40
+                    }
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('location.coordinates should be of type "Array"')
+    });
+    test('PUT /:id incorrect location coordinates type', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'Point',
+                    coordinates: [
+                        'lng',
+                        'lat',
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('location.coordinates should be an array of numbers')
+    });
+    test('PUT /:id incorrect location coordinates length', async () => {
+        let res = await request(app)
+            .put('/5d116e5e97114213e069dd27')
+            .set('Content-Type', 'application/json')
+            .send({
+                name: 'STARCUPS',
+                location: {
+                    type: 'Point',
+                    coordinates: [
+                        -6.866521,
+                        33.955940,
+                        'hello'
+                    ]
+                }
+            });
+        expect(res.status).toEqual(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toEqual('location.coordinates should be of length 2 : [lng,lat]')
+    });
 })
