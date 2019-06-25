@@ -1,24 +1,37 @@
 const shopService = require('./service')
 
 exports.getAll = async (req, res, next) => {
-    let items = await shopService.getAll({})
+    try {
+        let items = await shopService.getAll({})
 
-    return res.status(200).json({
-        status: 200,
-        data: items,
-        message: `Successfully received shops`
-    })
+        return res.status(200).json({
+            status: 200,
+            data: items,
+            message: `Successfully received shops`
+        })
+    } catch (e) {
+        next(e)
+    }
 }
 
 exports.getItem = async (req, res, next) => {
     let id = req.params.id
-    let item = await shopService.getItem({ _id: id })
+    try {
+        let item = await shopService.getItem({ _id: id })
 
-    return res.status(200).json({
-        status: 200,
-        data: item,
-        message: `Successfully received shop`
-    })
+        if (!item) return res.status(404).json({
+            status: 404,
+            message: `Item with id : ${id} not found`
+        })
+
+        return res.status(200).json({
+            status: 200,
+            data: item,
+            message: `Successfully received shop`
+        })
+    } catch (e) {
+        next(e)
+    }
 }
 
 exports.getItemByName = async (req, res, next) => {
