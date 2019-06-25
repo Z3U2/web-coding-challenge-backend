@@ -182,3 +182,28 @@ describe('POST tests', () => {
         expect(res.body.message).toEqual('location.coordinates should be of length 2 : [lng,lat]')
     });
 })
+
+describe('DELETE tests', () => {
+    beforeAll(async () => {
+        await initDB()
+        return
+    })
+
+    afterAll(async () => {
+        await cleanDB()
+        return
+    })
+    test('DELETE /5d116e5e97114213e069dd31', async () => {
+        let res = await request(app)
+            .delete('/5d116e5e97114213e069dd31')
+        expect(res.status).toEqual(200)
+        let verification = await request(app)
+            .get('/5d116e5e97114213e069dd31')
+        expect(verification.status).toEqual(404)
+    })
+    test('DELETE /inexistentShop', async () => {
+        let res = await request(app)
+            .delete(`/${new mongoose.Types.ObjectId}`)
+        expect(res.status).toEqual(404)
+    })
+})
