@@ -10,7 +10,12 @@ const { initDB,cleanDB } = require('../../test-set/DB')
 
 beforeAll(async () => {
     try {
-        await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
+        await mongoose.connect(
+            process.env.DB_URL,
+            { 
+                useNewUrlParser: true,
+                useFindAndModify: false 
+            })
         const shopAPI = new ShopAPI()
         await cleanDB()
         app.use('/',shopAPI.router)
