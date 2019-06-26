@@ -24,3 +24,25 @@ exports.createItem = async (item) => {
     })
     return await newItem.save()
 }
+
+exports.getNearMe = async (lat,lng) => {
+    let geometry = {
+        type : 'Point',
+        coordinates : [
+            lng,
+            lat
+        ]
+    }
+
+    let items = await shopModel.aggregate([
+        {
+            $geoNear: {
+                near: geometry,
+                distanceField: 'dist',
+                spherical: true
+            }
+        }
+    ])
+
+    return items
+}

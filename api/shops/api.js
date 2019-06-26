@@ -18,6 +18,9 @@ exports.ShopAPI = class {
         
         // GET /
         router.get('/', shopController.getAll)
+        // GET /nearme
+        router.get('/nearme', shopController.checkQuery)
+        router.get('/nearme', shopController.getNearMe)
         // GET /:id
         router.get('/:id',paramIsId)
         router.get('/:id', shopController.getItem)

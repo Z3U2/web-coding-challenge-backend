@@ -1,5 +1,6 @@
 const shopService = require('./service')
 const { validate } = require('./helper/validate')
+const { checkQuery } = require('./helper/query')
 
 exports.getAll = async (req, res, next) => {
     try {
@@ -97,4 +98,24 @@ exports.updateItem = async (req, res, next) => {
     }
 }
 
+exports.getNearMe = async (req, res, next) => {
+    let lat = req.query.lat
+    let lng = req.query.lng
+
+    try {
+        let items = await shopService.getNearMe(lat,lng)
+
+        return res.status(200).json({
+            status: 200,
+            data: items,
+            message: `Successfully received shops`
+        })
+    } catch (e) {
+        console.log(e)
+        next(e)
+    }
+
+}
+
 exports.validate = validate
+exports.checkQuery = checkQuery
