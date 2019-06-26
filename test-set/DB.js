@@ -1,12 +1,15 @@
 const shopModel = require('../api/shops/model')
+const userModel = require('../api/users/model')
 
 const shops = require('./shops.json')
+const users = require('./users.json')
 
-const collections = [shopModel];
+const collections = [shopModel,userModel];
 
 async function initDB() {
     try {
-        await shopModel.insertMany(shops)    
+        await shopModel.insertMany(shops)
+        await userModel.insertMany(users)    
         return    
     } catch (e) {
         console.log(e)
