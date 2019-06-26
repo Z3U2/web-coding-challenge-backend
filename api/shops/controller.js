@@ -1,5 +1,5 @@
 const shopService = require('./service')
-const { validate } = require('./validate')
+const { validate } = require('./helper/validate')
 
 exports.getAll = async (req, res, next) => {
     try {
