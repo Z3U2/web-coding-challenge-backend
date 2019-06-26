@@ -1,4 +1,5 @@
 const userService = require('./service')
+const { validate } = require('./helper/validate')
 
 exports.getAll = async (req, res, next) => {
     try {
@@ -93,3 +94,5 @@ exports.updateItem = async (req, res, next) => {
 
     }
 }
+
+exports.validate = validate
