@@ -2,9 +2,13 @@ const userController = require('./controller')
 const express = require('express')
 const { paramIsId } = require('../utils/checkId')
 const { checkBody, cleanBody, checkFields } = require('../utils/fields')
+const { login, authMiddleWare,authRequired } = require('./helper/auth/auth') 
 
 exports.UserAPI = class {
     constructor() {
+        this.authMiddleWare = authMiddleWare
+        this.authRequired = authRequired
+        this.login = login
         this.checkBody = checkBody
         this.cleanBody = cleanBody.bind(this)
         this.checkFields = checkFields.bind(this)
@@ -18,6 +22,10 @@ exports.UserAPI = class {
 
         // GET /
         router.get('/', userController.getAll)
+        // GET /pref
+        router.get('/pref', this.authMiddleWare)
+        router.get('/pref', this.authRequired)
+        router.get('/pref', userController.getPref)
         // GET /:id
         router.get('/:id', paramIsId)
         router.get('/:id', userController.getItem)
@@ -27,12 +35,23 @@ exports.UserAPI = class {
         router.post('/', this.cleanBody)
         router.post('/', userController.validate)
         router.post('/', userController.createItem)
+        // POST /login
+        router.post('/login', this.authMiddleWare)
+        router.post('/login', this.login)
+        // POST /pref
+        router.post('/pref', this.authMiddleWare)
+        router.post('/pref', this.authRequired)
+        router.post('/pref', userController.addPref)
         // PUT /:id
         router.put('/:id', paramIsId)
         router.put('/:id', this.checkBody)
         router.put('/:id', this.cleanBody)
         router.put('/:id', userController.validate)
         router.put('/:id', userController.updateItem)
+        // DELETE /pref
+        router.delete('/pref', this.authMiddleWare)
+        router.delete('/pref', this.authRequired)
+        router.delete('/pref', userController.removePref)
         // DELETE /:id
         router.delete('/:id', paramIsId)
         router.delete('/:id', userController.deleteItem)
