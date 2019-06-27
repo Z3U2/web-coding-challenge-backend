@@ -95,4 +95,25 @@ exports.updateItem = async (req, res, next) => {
     }
 }
 
+exports.addPref = async (req, res, next) => {
+    return res.status(404).json({
+        status: 404,
+        message: 'Code this endpoint'
+    })
+}
+
+exports.removePref = async (req, res, next) => {
+    return res.status(404).json({
+        status: 404,
+        message: 'Code this endpoint'
+    })
+}
+
+exports.getPref = async (req, res, next) => {
+    return res.status(404).json({
+        status: 404,
+        message: 'Code this endpoint'
+    })
+}
+
 exports.validate = validate
