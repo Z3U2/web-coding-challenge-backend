@@ -70,9 +70,13 @@ passport.serializeUser((user, done) => {
 
 const login = async (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
-        if (err) next(err)
+        if (info) return res.status(400).json({
+            status: 400,
+            ...info
+        })
+        if (err) return next(err)
         req.login(user, (err) => {
-            if (err) next(err)
+            if (err) return next(err)
             return res.status(200).json({
                 status: 200,
                 message: 'Successfully logged in'
