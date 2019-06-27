@@ -51,9 +51,11 @@ This project uses mongodb (version >= 4.0), So you need to have a local or remot
 
 #### Indexes :
 
+You need to create 2 indexes :
+
 * `2dsphere` index for `location` field in `shops` collection
 * `unique` regular ( `1` ) index for `email` field in `users` collection
-* `sessions`' `expires` index managed by `connect-mongo` package
+* `sessions`' `expires` index **managed by `connect-mongo` package**
 
 ## Run :
 
