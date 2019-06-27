@@ -89,7 +89,7 @@ The API is generally RESTFUL and returns results in JSON. JSON formats dealt by 
         password : <userPassword>
     }
 
-Should respond with a successful login JSON and set the session cookie if the credentials are correct.
+Should respond with a successful login JSON and set a valid session cookie if the credentials are correct.
 
 ## Test :
 
