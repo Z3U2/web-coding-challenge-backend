@@ -68,6 +68,18 @@ passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
+passport.deserializeUser(async (id, done) => {
+    try {
+        let user = await userService.getItem({
+            _id: id
+        })
+        done(null, user);
+    }
+    catch (err) {
+        done(err, false)
+    }
+});
+
 const login = async (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (info) return res.status(400).json({
