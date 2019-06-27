@@ -45,8 +45,8 @@ This project uses mongodb (version >= 4.0), So you need to have a local or remot
 
 #### Collections : 
 
-* `users` : stores users
-* `shops` : stores shops
+* `users` : stores users ([Schema](https://github.com/Z3U2/web-coding-challenge-backend/blob/master/api/users/model.js))
+* `shops` : stores shops ([Schema](https://github.com/Z3U2/web-coding-challenge-backend/blob/master/api/shops/model.js))
 * `sessions` : stores sessions, managed by `connect-mongo` package
 
 #### Indexes :
