@@ -87,7 +87,7 @@ The API is generally RESTFUL and returns results in JSON. JSON formats dealt by 
 
 ## Authentication :
 * CRUD : JWT (yet to implement)
-* `/users/pref` and `/shops/nearme` : [session cookies](#session-cookies-authentication)
+* `/users/pref` and `/shops/nearme` : [session cookies](#session-cookies-authentication-)
 
 ### Session Cookies Authentication : 
 
