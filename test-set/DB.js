@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+
 const shopModel = require('../api/shops/model')
 const userModel = require('../api/users/model')
 
@@ -22,6 +24,7 @@ async function cleanDB() {
         for (col of collections) {
             await col.deleteMany({})
         }
+        await mongoose.connection.db.collection('sessions').deleteMany({})
         return
     }
     catch(e) {
