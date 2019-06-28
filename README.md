@@ -105,5 +105,3 @@ Should respond with a successful login JSON and set a valid session cookie if th
 Once setup is finished you can run the server with :
     
     npm test
-
-⚠️ **Note** : tests related to `GET /shops/nearme` won't pass unless you comment the `authRequired` middleware line in the file `api/shops/api.js`. This is due to `supertest` not being able to keep cookies (unlike `superagent`), I'm working on this issue.
