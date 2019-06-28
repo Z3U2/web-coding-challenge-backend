@@ -2,10 +2,11 @@ const shopController = require('./controller')
 const express = require('express')
 const { paramIsId } = require('../utils/checkId')
 const { checkBody, cleanBody, checkFields } = require('../utils/fields')
-const { authRequired } = require('../users/helper/auth/auth')
+const { authRequired, authMiddleWare } = require('../users/helper/auth/auth')
 
 exports.ShopAPI = class {
     constructor() {
+        this.authMiddleWare = authMiddleWare
         this.authRequired = authRequired
         this.checkBody = checkBody
         this.cleanBody = cleanBody.bind(this)
@@ -21,6 +22,7 @@ exports.ShopAPI = class {
         // GET /
         router.get('/', shopController.getAll)
         // GET /nearme
+        router.get('/nearme', this.authMiddleWare)
         router.get('/nearme', this.authRequired)
         router.get('/nearme', shopController.checkQuery)
         router.get('/nearme', shopController.getNearMe)
