@@ -6,7 +6,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const { ShopAPI } = require('./api')
 const { initDB,cleanDB } = require('../../test-set/DB')
-
+const { getLoginCookies } = require('../../test-set/utils')
 
 beforeAll(async () => {
     try {
@@ -74,69 +74,81 @@ describe('GET tests', () => {
         let res = await request(app).get(`/${new mongoose.Types.ObjectId}`)
         expect(res.status).toEqual(404)
     })
-    test('GET /nearme correct inputs', async () => {
-        const orderedIds = [
-            "5d116e5e97114213e069dd27",
-            "5d116e5e97114213e069dd29",
-            "5d116e5e97114213e069dd2b",
-            "5d116e5e97114213e069dd2d",
-            "5d116e5e97114213e069dd2f",
-            "5d116e5e97114213e069dd31",
-            "5d116e5e97114213e069dd33",
-            "5d116e5e97114213e069dd35",
-            "5d116e5e97114213e069dd37",
-            "5d116e5e97114213e069dd39",
-            "5d116e5e97114213e069dd3b",
-            "5d116e5e97114213e069dd3d",
-            "5d116e5e97114213e069dd3f",
-            "5d116e5e97114213e069dd41",
-            "5d116e5e97114213e069dd43",
-            "5d116e5e97114213e069dd45",
-            "5d116e5e97114213e069dd47",
-            "5d116e5e97114213e069dd49",
-            "5d116e5e97114213e069dd4b",
-            "5d116e5e97114213e069dd4d"
-        ]
-        let res = await request(app)
-            .get('/nearme?lat=33.957880&lng=-6.867932')
-        expect(res.status).toEqual(200);
-        expect(res.body.data[0]).toHaveProperty('dist')
-        expect(res.body.data.map(place => place._id)).toEqual(orderedIds);   
-    })
-    test('GET /nearme incorrect lat', async () => {
-        let res = await request(app)
-            .get('/nearme?lat=af35&lng=-6.867932')
-        expect(res.status).toEqual(400);
-        expect(res.body).toHaveProperty('message')
-        expect(res.body.message).toEqual('lat should be a number between -90 and 90')
-    })
-    test('GET /nearme incorrect lng', async () => {
-        let res = await request(app)
-            .get('/nearme?lat=35&lng=af-6.867932')
-        expect(res.status).toEqual(400);
-        expect(res.body).toHaveProperty('message')
-        expect(res.body.message).toEqual('lng should be a number between -180 and 180')
-    })
-    test('GET /nearme Missing lng', async () => {
-        let res = await request(app)
-            .get('/nearme?lat=35')
-        expect(res.status).toEqual(400);
-        expect(res.body).toHaveProperty('message')
-        expect(res.body.message).toEqual('Missing lng')
-    })
-    test('GET /nearme Missing lat', async () => {
-        let res = await request(app)
-            .get('/nearme?lng=35')
-        expect(res.status).toEqual(400);
-        expect(res.body).toHaveProperty('message')
-        expect(res.body.message).toEqual('Missing lat')
-    })
-    test('GET /nearme Unknown query parameter', async () => {
-        let res = await request(app)
-            .get('/nearme?lat=33.957880&lng=-6.867932&test=test')
-        expect(res.status).toEqual(400);
-        expect(res.body).toHaveProperty('message')
-        expect(res.body.message).toEqual('Unknown query parameter : test')
+    describe('GET /nearme tests', () => {
+        let loginCookies
+        beforeAll(async () => {
+            loginCookies = await getLoginCookies()
+        })
+        test('GET /nearme correct inputs', async () => {
+            const orderedIds = [
+                "5d116e5e97114213e069dd27",
+                "5d116e5e97114213e069dd29",
+                "5d116e5e97114213e069dd2b",
+                "5d116e5e97114213e069dd2d",
+                "5d116e5e97114213e069dd2f",
+                "5d116e5e97114213e069dd31",
+                "5d116e5e97114213e069dd33",
+                "5d116e5e97114213e069dd35",
+                "5d116e5e97114213e069dd37",
+                "5d116e5e97114213e069dd39",
+                "5d116e5e97114213e069dd3b",
+                "5d116e5e97114213e069dd3d",
+                "5d116e5e97114213e069dd3f",
+                "5d116e5e97114213e069dd41",
+                "5d116e5e97114213e069dd43",
+                "5d116e5e97114213e069dd45",
+                "5d116e5e97114213e069dd47",
+                "5d116e5e97114213e069dd49",
+                "5d116e5e97114213e069dd4b",
+                "5d116e5e97114213e069dd4d"
+            ]
+            let res = await request(app)
+                .get('/nearme?lat=33.957880&lng=-6.867932')
+                .set('cookie',loginCookies)
+            expect(res.status).toEqual(200);
+            expect(res.body.data[0]).toHaveProperty('dist')
+            expect(res.body.data.map(place => place._id)).toEqual(orderedIds);
+        })
+        test('GET /nearme incorrect lat', async () => {
+            let res = await request(app)
+                .get('/nearme?lat=af35&lng=-6.867932')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400);
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('lat should be a number between -90 and 90')
+        })
+        test('GET /nearme incorrect lng', async () => {
+            let res = await request(app)
+                .get('/nearme?lat=35&lng=af-6.867932')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400);
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('lng should be a number between -180 and 180')
+        })
+        test('GET /nearme Missing lng', async () => {
+            let res = await request(app)
+                .get('/nearme?lat=35')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400);
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('Missing lng')
+        })
+        test('GET /nearme Missing lat', async () => {
+            let res = await request(app)
+                .get('/nearme?lng=35')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400);
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('Missing lat')
+        })
+        test('GET /nearme Unknown query parameter', async () => {
+            let res = await request(app)
+                .get('/nearme?lat=33.957880&lng=-6.867932&test=test')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400);
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('Unknown query parameter : test')
+        })
     })
 });
 
