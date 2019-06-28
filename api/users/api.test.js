@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const { initDB, cleanDB } = require('../../test-set/DB')
 const { UserAPI } = require('./api')
 const { extractCookies } = require('../../test-set/utils')
-const { authRequired } = require('./helper/auth/auth')
+const { authRequired, authMiddleWare } = require('./helper/auth/auth')
 
 beforeAll(async () => {
     try {
@@ -19,6 +19,7 @@ beforeAll(async () => {
             })
         const userAPI = new UserAPI()
         await cleanDB()
+        app.get('/testLogin', authMiddleWare)
         app.get('/testLogin', authRequired)
         app.get('/testLogin', (req, res, next) => {
             return res.status(200).send("ok")
