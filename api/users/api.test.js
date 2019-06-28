@@ -6,7 +6,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const { initDB, cleanDB } = require('../../test-set/DB')
 const { UserAPI } = require('./api')
-const { extractCookies } = require('../../test-set/utils')
+const { extractCookies, getLoginCookies } = require('../../test-set/utils')
 const { authRequired, authMiddleWare } = require('./helper/auth/auth')
 
 beforeAll(async () => {
@@ -70,4 +70,28 @@ describe('POST /login tests', () => {
         expect(res.body.message).toEqual('Incorrect email or password')
     })
     
+})
+
+describe('Session tests', () => {
+    let loginCookies
+    beforeAll(async () => {
+        await initDB()
+        loginCookies = await getLoginCookies()
+        return
+    })
+    afterAll(async () => {
+        await cleanDB()
+        return
+    })
+    test('Logged in user can access protected routes', async () => {
+        let res = await request(app)
+            .get('/testLogin')
+            .set('cookie', loginCookies)
+        expect(res.status).toEqual(200)
+    })
+    test('Non logged in user can\'t access protected routes', async () => {
+        let res = await request(app)
+            .get('/testLogin')
+        expect(res.status).toEqual(401)
+    })
 })
