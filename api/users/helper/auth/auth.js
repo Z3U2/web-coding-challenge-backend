@@ -101,9 +101,9 @@ const authRequired = async (req, res, next) => {
     if (req.isAuthenticated()) {
         next()
     } else {
-        res.status(403).json({
-            status: 403,
-            message : 'Forbidden'
+        res.status(401).json({
+            status: 401,
+            message : 'Unauthorized'
         })
     }
 }
