@@ -120,3 +120,18 @@ Should respond with a successful login JSON and set a valid session cookie if th
 Once setup is finished you can run the server with :
     
     npm test
+
+## TODO :
+
+- [ ] Document API endpoints
+- [ ] Inline documentation
+- [ ] CRUD API Authentication (JWT ?)
+- [ ] User API validation and CRUD tests + implementation
+- [ ] Handling shop pictures
+- [ ] Performance testing
+- [ ] Integration testing
+
+## Possible Enhancements :
+
+- Use TypeScript
+- Use mongodb native driver (performance)
