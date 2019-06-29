@@ -95,3 +95,153 @@ describe('Session tests', () => {
         expect(res.status).toEqual(401)
     })
 })
+
+describe('/pref tests', () => {
+    let loginCookies
+    describe('GET /pref tests', () => {
+        beforeAll(async () => {
+            await initDB()
+            loginCookies = await getLoginCookies()
+            return
+        })
+        afterAll(async () => {
+            await cleanDB()
+            return
+        })
+        test('GET /pref', async () => {
+            let res = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(200)
+            expect(res.body).toHaveProperty('data')
+            expect(res.body.data).toEqual(
+                [
+                    "5d116e5e97114213e069dd37",
+                    "5d116e5e97114213e069dd35"
+                ]
+            )
+        })
+    })
+    describe('POST /pref/:id tests', () => {
+        beforeAll(async () => {
+            await initDB()
+            loginCookies = await getLoginCookies()
+            return
+        })
+        afterAll(async () => {
+            await cleanDB()
+            return
+        })
+        test('POST /pref/:id with valid id', async () => {
+            let res = await request(app)
+                .post('/pref/5d116e5e97114213e069dd41')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(200)
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('Succesfully added Ryadsquare store to preferences')
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data.length).toEqual(3)
+            expect(verif.body.data).toContain('5d116e5e97114213e069dd41')
+        })
+        test('POST /pref/:id with inexistent id', async () => {
+            let someId = new mongoose.Types.ObjectId
+            let res = await request(app)
+                .post(`/pref/${someId}`)
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(404)
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data).not.toContain(`${someId}`)
+            expect(verif.body.data.length).toEqual(3)
+        })
+        test('POST /pref/:id with non valid id', async () => {
+            let res = await request(app)
+                .post('/pref/something')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400)
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('something not a valid ObjectId')
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data).not.toContain('something')
+            expect(verif.body.data.length).toEqual(3)
+        })
+        test('POST /pref/:id with id already in prefs', async () => {
+            let res = await request(app)
+                .post('/pref/5d116e5e97114213e069dd37')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400)
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('ObjectId already in prefs')
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data).toEqual([...new Set(verif.body.data)])
+            expect(verif.body.data.length).toEqual(3)
+        })
+    })
+    describe('DELETE /pref/:id tests', () => {
+        beforeAll(async () => {
+            await initDB()
+            loginCookies = await getLoginCookies()
+            return
+        })
+        afterAll(async () => {
+            await cleanDB()
+            return
+        })
+        test('DELETE /pref/:id with valid id', async () => {
+            let res = await request(app)
+                .delete('/pref/5d116e5e97114213e069dd37')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(200)
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('Succesfully deleted Yves Rocher from preferences')
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data.length).toEqual(1)
+            expect(verif.body.data).not.toContain('5d116e5e97114213e069dd37')
+            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+        })
+        test('DELETE /pref/:id with inexistent id', async () => {
+            let someId = new mongoose.Types.ObjectId
+            let res = await request(app)
+                .delete(`/pref/${someId}`)
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(404)
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+        })
+        test('DELETE /pref/:id with non valid id', async () => {
+            let res = await request(app)
+                .delete('/pref/something')
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400)
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('something not a valid ObjectId')
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+        })
+        test('DELETE /pref/:id with id not in prefs', async () => {
+            let res = await request(app)
+                .delete('/pref/5d116e5e97114213e069dd41')    
+                .set('cookie', loginCookies)
+            expect(res.status).toEqual(400)
+            expect(res.body).toHaveProperty('message')
+            expect(res.body.message).toEqual('ObjectId not in prefs')
+            let verif = await request(app)
+                .get('/pref')
+                .set('cookie', loginCookies)
+            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+        })
+    })
+})
