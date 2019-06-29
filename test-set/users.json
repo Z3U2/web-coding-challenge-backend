@@ -1,14 +1,17 @@
 [
     {
         "email": "test1@example.com",
-        "password": "$2b$10$ndmCRerRh7wBok7LcG/4R.E.J53ktM.uFXDd9nMGQqXQ0vgaXccE."
+        "password": "$2b$10$ndmCRerRh7wBok7LcG/4R.E.J53ktM.uFXDd9nMGQqXQ0vgaXccE.",
+        "prefs" : ["5d116e5e97114213e069dd37","5d116e5e97114213e069dd35"]
     },
     {
         "email": "test2@example.com",
-        "password": "$2b$10$gCuBEZ53LimXymbQxPMPPORLYahsWlYP9NpQ9z28z63WVl8sAGLTW"
+        "password": "$2b$10$gCuBEZ53LimXymbQxPMPPORLYahsWlYP9NpQ9z28z63WVl8sAGLTW",
+        "prefs": ["5d116e5e97114213e069dd31"]
     },
     {
         "email": "test3@example.com",
-        "password": "$2b$10$X7Umbi3hz2zxhXOr19HE6.qqL6g4zbnzs8yLbSp..ye9roZu56gr."
+        "password": "$2b$10$X7Umbi3hz2zxhXOr19HE6.qqL6g4zbnzs8yLbSp..ye9roZu56gr.",
+        "prefs": ["5d116e5e97114213e069dd4d","5d116e5e97114213e069dd4b"]
     }
 ]
