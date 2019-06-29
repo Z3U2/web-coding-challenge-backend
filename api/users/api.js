@@ -42,6 +42,7 @@ exports.UserAPI = class {
         router.post('/pref/:id', this.authMiddleWare)
         router.post('/pref/:id', this.authRequired)
         router.post('/pref/:id', paramIsId)
+        router.post('/pref/:id', userController.attachShop)
         router.post('/pref/:id', userController.addPref)
         // PUT /:id
         router.put('/:id', paramIsId)
@@ -53,6 +54,7 @@ exports.UserAPI = class {
         router.delete('/pref/:id', this.authMiddleWare)
         router.delete('/pref/:id', this.authRequired)
         router.delete('/pref/:id', paramIsId)
+        router.delete('/pref/:id', userController.attachShop)
         router.delete('/pref/:id', userController.removePref)
         // DELETE /:id
         router.delete('/:id', paramIsId)
