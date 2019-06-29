@@ -116,10 +116,22 @@ exports.addPref = async (req, res, next) => {
 }
 
 exports.removePref = async (req, res, next) => {
-    return res.status(404).json({
-        status: 404,
-        message: 'Code this endpoint'
+    let user = req.user
+    let shop = req.shop
+    if (!user.prefs.includes(shop._id)) return res.status(400).json({
+        status: 400,
+        message: 'ObjectId not in prefs'
     })
+    try {
+        user.prefs.pull(shop)
+        await user.save()
+        return res.status(200).json({
+            status: 200,
+            message: `Successfully deleted ${shop.name} from preferences`
+        })
+    } catch (e) {
+        return next(e)
+    }
 }
 
 exports.getPref = async (req, res, next) => {
