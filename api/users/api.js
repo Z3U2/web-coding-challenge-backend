@@ -38,20 +38,22 @@ exports.UserAPI = class {
         // POST /login
         router.post('/login', this.authMiddleWare)
         router.post('/login', this.login)
-        // POST /pref
-        router.post('/pref', this.authMiddleWare)
-        router.post('/pref', this.authRequired)
-        router.post('/pref', userController.addPref)
+        // POST /pref/:id
+        router.post('/pref/:id', this.authMiddleWare)
+        router.post('/pref/:id', this.authRequired)
+        router.post('/pref/:id', paramIsId)
+        router.post('/pref/:id', userController.addPref)
         // PUT /:id
         router.put('/:id', paramIsId)
         router.put('/:id', this.checkBody)
         router.put('/:id', this.cleanBody)
         router.put('/:id', userController.validate)
         router.put('/:id', userController.updateItem)
-        // DELETE /pref
-        router.delete('/pref', this.authMiddleWare)
-        router.delete('/pref', this.authRequired)
-        router.delete('/pref', userController.removePref)
+        // DELETE /pref/:id
+        router.delete('/pref/:id', this.authMiddleWare)
+        router.delete('/pref/:id', this.authRequired)
+        router.delete('/pref/:id', paramIsId)
+        router.delete('/pref/:id', userController.removePref)
         // DELETE /:id
         router.delete('/:id', paramIsId)
         router.delete('/:id', userController.deleteItem)
