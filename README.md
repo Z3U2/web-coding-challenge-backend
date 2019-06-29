@@ -65,7 +65,9 @@ Once setup is finished you can run the server with :
 
 ## API : 
 
-The API is generally RESTFUL and returns results in JSON. JSON formats dealt by the API are documented [here](https://github.com/Z3U2/web-coding-challenge-backend/blob/master/API_DOC.md).
+The API is generally RESTFUL and returns results in JSON. Enpoints and JSON formats dealt by the API are documented in each of the API's subfolders' READMEs: 
+* `/users` : [Documentation](https://github.com/Z3U2/web-coding-challenge-backend/blob/master/api/users/README.md)
+* `/shops` : [Documentation](https://github.com/Z3U2/web-coding-challenge-backend/blob/master/api/shops/README.md)
 
 ### Example :
 `GET` request to `/users/` returns a response in this shape :
@@ -83,7 +85,7 @@ The API is generally RESTFUL and returns results in JSON. JSON formats dealt by 
         ]
     }
 
-⚠️ All POST and PUT requests expect JSON request body
+⚠️ Generally all POST and PUT requests expect JSON request body
 
 ## Authentication :
 * CRUD : JWT (yet to implement)
