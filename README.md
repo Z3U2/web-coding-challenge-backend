@@ -1,6 +1,23 @@
 # web-coding-challenge-backend
 Backend for UR [web-coding-challenge](https://github.com/hiddenfounders/web-coding-challenge) : Nearby Shop Listing App
 
+**Summary** :
+* [Specification](#specification-)
+* [Setup](#setup-)
+    * [Packages](#packages)
+    * [Environment](#environment)
+    * [Database](#database)
+        - [Collections](#collections-)
+        - [Indexes](#indexes-)
+* [Run](#run-)
+* [API](#api-)
+    * [Example](#example)
+* [Authentication](#authentication-)
+    * [Session Cookies Authentication](#session-cookies-authentication-)
+* [Test](#test-)
+* [TODO](#todo-)
+* [Possible Enhancements](#possible-enhancements-)
+## Specification :
 Functional specs from the challenge's repo : 
 > The coding challenge is about implementing an app that lists shops nearby. 
 >
