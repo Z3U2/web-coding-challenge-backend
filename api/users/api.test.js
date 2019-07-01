@@ -245,3 +245,29 @@ describe('/pref tests', () => {
         })
     })
 })
+
+describe('GET /me tests', () => {
+    let loginCookies
+    beforeAll(async () => {
+        await initDB()
+        loginCookies = await getLoginCookies()
+        return
+    })
+    afterAll(async () => {
+        await cleanDB()
+        return
+    })
+    test('Can get logged in user with session', async () => {
+        let res = await request(app)
+            .get('/me')
+            .set('cookie', loginCookies)
+        expect(res.status).toEqual(200)
+        expect(res.body.data).toHaveProperty('email')
+        expect(res.body.data.email).toEqual('test1@example.com')
+    })
+    test('Can\'t get logged in user without session', async () => {
+        let res = await request(app)
+            .get('/me')
+        expect(res.status).toEqual(401)
+    })
+})
