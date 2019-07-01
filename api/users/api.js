@@ -2,13 +2,14 @@ const userController = require('./controller')
 const express = require('express')
 const { paramIsId } = require('../utils/checkId')
 const { checkBody, cleanBody, checkFields } = require('../utils/fields')
-const { login, authMiddleWare,authRequired } = require('./helper/auth/auth') 
+const { login, authMiddleWare,authRequired,logout } = require('./helper/auth/auth') 
 
 exports.UserAPI = class {
     constructor() {
         this.authMiddleWare = authMiddleWare
         this.authRequired = authRequired
         this.login = login
+        this.logout = logout
         this.checkBody = checkBody
         this.cleanBody = cleanBody.bind(this)
         this.checkFields = checkFields.bind(this)
@@ -22,6 +23,10 @@ exports.UserAPI = class {
 
         // GET /
         router.get('/', userController.getAll)
+        // GET /logout
+        router.get('/logout', this.authMiddleWare)
+        router.get('/logout', this.authRequired)
+        router.get('/logout', this.logout)
         // GET /me
         router.get('/me', this.authMiddleWare)
         router.get('/me', this.authRequired)
