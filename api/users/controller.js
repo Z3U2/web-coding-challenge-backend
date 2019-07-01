@@ -141,11 +141,19 @@ exports.getPref = async (req, res, next) => {
         message: 'Successfully received preferences',
         data: []
     })
-    else return res.status(200).json({
-        status: 200,
-        message: 'Successfully received preferences',
-        data: user.prefs
-    })
+    else {
+        try {
+            let populatedUser = await user.populate('prefs').execPopulate()
+
+            return res.status(200).json({
+                status: 200,
+                message: 'Successfully received preferences',
+                data: populatedUser.prefs
+            })
+        } catch (e) {
+            return next(e)
+        }
+    }
 }
 
 exports.validate = validate
