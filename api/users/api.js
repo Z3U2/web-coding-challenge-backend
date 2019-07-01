@@ -22,6 +22,10 @@ exports.UserAPI = class {
 
         // GET /
         router.get('/', userController.getAll)
+        // GET /me
+        router.get('/me', this.authMiddleWare)
+        router.get('/me', this.authRequired)
+        router.get('/me', userController.getMe)
         // GET /pref
         router.get('/pref', this.authMiddleWare)
         router.get('/pref', this.authRequired)
