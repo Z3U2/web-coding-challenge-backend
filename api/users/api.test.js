@@ -271,3 +271,31 @@ describe('GET /me tests', () => {
         expect(res.status).toEqual(401)
     })
 })
+
+describe('GET /logout tests', () => {
+    let loginCookies
+    beforeAll(async () => {
+        await initDB()
+        loginCookies = await getLoginCookies()
+        return
+    })
+    afterAll(async () => {
+        await cleanDB()
+        return
+    })
+    test('Successfully log out', async () => {
+        let res = await request(app)
+            .get('/logout')
+            .set('cookie', loginCookies)
+        expect(res.status).toEqual(200)
+        let verif = await request(app)
+            .get('/testLogin')
+            .set('cookie', loginCookies)
+        expect(verif.status).toEqual(401)
+    })
+    test('Non logged in returns 401', async () => {
+        let res = await request(app)
+            .get('/logout')
+        expect(res.status).toEqual(401)
+    })
+})
