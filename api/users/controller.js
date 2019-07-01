@@ -156,5 +156,16 @@ exports.getPref = async (req, res, next) => {
     }
 }
 
+exports.getMe = async (req, res, next) => {
+    const user = req.user
+    return res.status(200).json({
+        status: 200,
+        message: 'Successfully received user',
+        data : {
+            email : user.email
+        }
+    })
+}
+
 exports.validate = validate
 exports.attachShop = attachShop
