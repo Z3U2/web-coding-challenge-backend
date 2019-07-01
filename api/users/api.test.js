@@ -6,7 +6,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const { initDB, cleanDB } = require('../../test-set/DB')
 const { UserAPI } = require('./api')
-const { extractCookies, getLoginCookies } = require('../../test-set/utils')
+const { extractCookies, getLoginCookies, extractIds } = require('../../test-set/utils')
 const { authRequired, authMiddleWare } = require('./helper/auth/auth')
 
 beforeAll(async () => {
@@ -114,7 +114,7 @@ describe('/pref tests', () => {
                 .set('cookie', loginCookies)
             expect(res.status).toEqual(200)
             expect(res.body).toHaveProperty('data')
-            expect(res.body.data).toEqual(
+            expect(extractIds(res.body.data)).toEqual(
                 [
                     "5d116e5e97114213e069dd37",
                     "5d116e5e97114213e069dd35"
@@ -143,7 +143,7 @@ describe('/pref tests', () => {
                 .get('/pref')
                 .set('cookie', loginCookies)
             expect(verif.body.data.length).toEqual(3)
-            expect(verif.body.data).toContain('5d116e5e97114213e069dd41')
+            expect(extractIds(verif.body.data)).toContain('5d116e5e97114213e069dd41')
         })
         test('POST /pref/:id with inexistent id', async () => {
             let someId = new mongoose.Types.ObjectId
@@ -154,7 +154,7 @@ describe('/pref tests', () => {
             let verif = await request(app)
                 .get('/pref')
                 .set('cookie', loginCookies)
-            expect(verif.body.data).not.toContain(`${someId}`)
+            expect(extractIds(verif.body.data)).not.toContain(`${someId}`)
             expect(verif.body.data.length).toEqual(3)
         })
         test('POST /pref/:id with non valid id', async () => {
@@ -167,7 +167,7 @@ describe('/pref tests', () => {
             let verif = await request(app)
                 .get('/pref')
                 .set('cookie', loginCookies)
-            expect(verif.body.data).not.toContain('something')
+            expect(extractIds(verif.body.data)).not.toContain('something')
             expect(verif.body.data.length).toEqual(3)
         })
         test('POST /pref/:id with id already in prefs', async () => {
@@ -180,7 +180,7 @@ describe('/pref tests', () => {
             let verif = await request(app)
                 .get('/pref')
                 .set('cookie', loginCookies)
-            expect(verif.body.data).toEqual([...new Set(verif.body.data)])
+            expect(extractIds(verif.body.data)).toEqual([...new Set(extractIds(verif.body.data))])
             expect(verif.body.data.length).toEqual(3)
         })
     })
@@ -205,8 +205,8 @@ describe('/pref tests', () => {
                 .get('/pref')
                 .set('cookie', loginCookies)
             expect(verif.body.data.length).toEqual(1)
-            expect(verif.body.data).not.toContain('5d116e5e97114213e069dd37')
-            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+            expect(extractIds(verif.body.data)).not.toContain('5d116e5e97114213e069dd37')
+            expect(extractIds(verif.body.data)).toEqual(['5d116e5e97114213e069dd35'])
         })
         test('DELETE /pref/:id with inexistent id', async () => {
             let someId = new mongoose.Types.ObjectId
@@ -217,7 +217,7 @@ describe('/pref tests', () => {
             let verif = await request(app)
                 .get('/pref')
                 .set('cookie', loginCookies)
-            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+            expect(extractIds(verif.body.data)).toEqual(['5d116e5e97114213e069dd35'])
         })
         test('DELETE /pref/:id with non valid id', async () => {
             let res = await request(app)
@@ -229,7 +229,7 @@ describe('/pref tests', () => {
             let verif = await request(app)
                 .get('/pref')
                 .set('cookie', loginCookies)
-            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+            expect(extractIds(verif.body.data)).toEqual(['5d116e5e97114213e069dd35'])
         })
         test('DELETE /pref/:id with id not in prefs', async () => {
             let res = await request(app)
@@ -241,7 +241,7 @@ describe('/pref tests', () => {
             let verif = await request(app)
                 .get('/pref')
                 .set('cookie', loginCookies)
-            expect(verif.body.data).toEqual(['5d116e5e97114213e069dd35'])
+            expect(extractIds(verif.body.data)).toEqual(['5d116e5e97114213e069dd35'])
         })
     })
 })

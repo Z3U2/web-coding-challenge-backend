@@ -31,5 +31,11 @@ async function getLoginCookies() {
     return res.header['set-cookie']
 }
 
+function extractIds(data) {
+    let result = data.map(shop => shop._id)
+    return result
+}
+
 module.exports.extractCookies = extractCookies
 module.exports.getLoginCookies = getLoginCookies
+module.exports.extractIds = extractIds
