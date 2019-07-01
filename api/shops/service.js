@@ -25,7 +25,7 @@ exports.createItem = async (item) => {
     return await newItem.save()
 }
 
-exports.getNearMe = async (lat,lng) => {
+exports.getNearMe = async (lat,lng,prefs) => {
     let geometry = {
         type : 'Point',
         coordinates : [
@@ -39,7 +39,12 @@ exports.getNearMe = async (lat,lng) => {
             $geoNear: {
                 near: geometry,
                 distanceField: 'dist',
-                spherical: true
+                spherical: true,
+                query: {
+                    _id : {
+                        $nin : prefs
+                    }
+                }
             }
         }
     ])

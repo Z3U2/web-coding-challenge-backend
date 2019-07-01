@@ -101,9 +101,10 @@ exports.updateItem = async (req, res, next) => {
 exports.getNearMe = async (req, res, next) => {
     let lat = req.query.lat
     let lng = req.query.lng
+    let prefs = req.user.prefs
 
     try {
-        let items = await shopService.getNearMe(lat,lng)
+        let items = await shopService.getNearMe(lat,lng,prefs)
 
         return res.status(200).json({
             status: 200,
