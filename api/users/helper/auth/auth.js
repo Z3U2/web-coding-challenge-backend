@@ -108,6 +108,18 @@ const authRequired = async (req, res, next) => {
     }
 }
 
+const logout = async (req, res, next) => {
+    req.session.destroy((err) => {
+        if (err) console.log(err)
+        return res.status(200).json({
+            status: 200,
+            message: 'Successfully Logged out'
+        })
+    })
+    
+}
+
 module.exports.authMiddleWare = [sessionMiddleware,passport.initialize(),passport.session()]
 module.exports.login = login
 module.exports.authRequired = authRequired
+module.exports.logout = logout
