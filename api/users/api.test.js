@@ -317,10 +317,17 @@ describe('POST /signup tests', () => {
                 email: "test42@example.com",
                 password: "T3stPassword!"
             })
-        console.log(res.body.message)
         expect(res.status).toEqual(200)
         expect(res.body).toHaveProperty('message')
         expect(res.body.message).toEqual('Successfully saved user')
+        let verif = await request(app)
+            .post('/login')
+            .set('Content-Type', 'application/json')
+            .send({
+                email: "test42@example.com",
+                password: "T3stPassword!"
+            })
+        expect(verif.status).toEqual(200)
     })
 
     test('POST /signup without email', async () => {
