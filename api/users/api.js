@@ -53,6 +53,7 @@ exports.UserAPI = class {
         router.post('/signup', this.cleanBody)
         router.post('/signup', userController.validate)
         router.post('/signup', userController.checkUniqueEmail)
+        router.post('/signup', userController.hashPass)
         router.post('/signup', userController.createItem)
         // POST /pref/:id
         router.post('/pref/:id', this.authMiddleWare)
