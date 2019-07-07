@@ -1,6 +1,7 @@
 const userService = require('./service')
 const { validate } = require('./helper/validate')
 const { attachShop } = require('./helper/attachShop')
+const { checkUniqueEmail } = require('./helper/checkUnique')
 
 exports.getAll = async (req, res, next) => {
     try {
@@ -169,3 +170,4 @@ exports.getMe = async (req, res, next) => {
 
 exports.validate = validate
 exports.attachShop = attachShop
+exports.checkUniqueEmail = checkUniqueEmail
