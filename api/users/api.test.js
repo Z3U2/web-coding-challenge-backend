@@ -299,3 +299,90 @@ describe('GET /logout tests', () => {
         expect(res.status).toEqual(401)
     })
 })
+
+describe('POST /signup tests', () => {
+    beforeAll(async () => {
+        await initDB()
+        return
+    })
+    afterAll(async () => {
+        await cleanDB()
+        return
+    })
+    test('POST /signup with correct inputs', async () => {
+        let res = await request(app)
+            .post('/signup')
+            .set('Content-Type', 'application/json')
+            .send({
+                email: "test42@example.com",
+                password: "T3stPassword!"
+            })
+        console.log(res.body.message)
+        expect(res.status).toEqual(200)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toEqual('Successfully saved user')
+    })
+
+    test('POST /signup without email', async () => {
+        let res = await request(app)
+            .post('/signup')
+            .set('Content-Type', 'application/json')
+            .send({
+                password: "T3stPassword!"
+            })
+        expect(res.status).toEqual(400)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toEqual('Missing email')
+    })
+
+    test('POST /signup without password', async () => {
+        let res = await request(app)
+            .post('/signup')
+            .set('Content-Type', 'application/json')
+            .send({
+                email: "test42@example.com",
+            })
+        expect(res.status).toEqual(400)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toEqual('Missing password')
+    })
+
+    test('POST /signup with incorrect email', async () => {
+        let res = await request(app)
+            .post('/signup')
+            .set('Content-Type', 'application/json')
+            .send({
+                email: "test1example.com",
+                password: "T3stPassword!"
+            })
+        expect(res.status).toEqual(400)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toEqual('Not a valid email')
+    })
+
+    test('POST /signup with incorrect email', async () => {
+        let res = await request(app)
+            .post('/signup')
+            .set('Content-Type', 'application/json')
+            .send({
+                email: "test42@example.com",
+                password: "T3stPassword"
+            })
+        expect(res.status).toEqual(400)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toEqual('Password should be between 8 to 15 characters and contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character')
+    })
+
+    test('POST /signup with existent email', async () => {
+        let res = await request(app)
+            .post('/signup')
+            .set('Content-Type', 'application/json')
+            .send({
+                email: "test1@example.com",
+                password: "T3stPassword!"
+            })
+        expect(res.status).toEqual(400)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toEqual('User with this email already exists')
+    })
+})
