@@ -3,7 +3,6 @@ const express = require('express')
 const { paramIsId } = require('../utils/checkId')
 const { checkBody, cleanBody, checkFields } = require('../utils/fields')
 const { login, authMiddleWare,authRequired,logout } = require('./helper/auth/auth') 
-
 exports.UserAPI = class {
     constructor() {
         this.authMiddleWare = authMiddleWare
@@ -47,6 +46,14 @@ exports.UserAPI = class {
         // POST /login
         router.post('/login', this.authMiddleWare)
         router.post('/login', this.login)
+        // POST /signup
+        router.post('/signup', this.authMiddleWare)
+        router.post('/signup', this.checkBody)
+        router.post('/signup', this.checkFields)
+        router.post('/signup', this.cleanBody)
+        router.post('/signup', userController.validate)
+        router.post('/signup', userController.checkUniqueEmail)
+        router.post('/signup', userController.createItem)
         // POST /pref/:id
         router.post('/pref/:id', this.authMiddleWare)
         router.post('/pref/:id', this.authRequired)
